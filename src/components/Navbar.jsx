@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/api";
+import defaultAvatar from "../assets/user-default.jpg";
 
 const Navbar = () => {
- const [user, setUser] = useState()
+ const [user, setUser] = useState([])
   const navigate = useNavigate();
 
 
@@ -18,14 +19,19 @@ const Navbar = () => {
   async function fetchData(){
     const data = await getUserInfo()
        const { looggedUser } = data;   // get looggedUser object
-        const { name } = looggedUser;
+       // const { name } = looggedUser;
     // setUser(data.loggedUser)
-    setUser(name)
+    setUser(looggedUser)
   }
 
   useEffect(()=>{
     fetchData()
   },[])
+
+   const profileImage =
+          user?.imgPath && user.imgPath.trim() !== ""
+              ? `http://localhost:5004${user.imgPath}`
+              : defaultAvatar;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow">
@@ -39,8 +45,15 @@ const Navbar = () => {
         {/* Right Side */}
         <div className="d-flex align-items-center gap-3 text-white">
           <span>
-            <FaUserCircle size={22} className="me-2" />
-           {user} {/* {user?.name} */}
+            {/* <FaUserCircle size={22} className="me-2" /> */}
+             <img
+                                src={profileImage}
+                                alt="Profile"
+                                className="rounded-circle me-2"
+                                width="30"
+                                height="30"
+                            />
+           {/* {user}*/} {user?.name} 
           </span>
 
           <button

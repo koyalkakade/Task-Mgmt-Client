@@ -15,3 +15,8 @@ export const updateTaskStatus = async (id, data) => {
     const res = await axiosInstance.patch(`/task/updateStatus/${id}`, data);
     return res.data;
 };
+
+export const getAssignTaskByUser = async (userID) => {
+  const res = await axiosInstance.get(`/assign/getAssignTaskByUser/${userID}`);
+  return res.data;
+};

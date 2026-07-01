@@ -15,6 +15,8 @@ import CreateUpdateTask from './components/tasks/CreateUpdateTask'
 import AllTasks from './components/tasks/AllTasks'
 import Dashboard from './pages/Dashboard'
 import MyTask from './components/tasks/MyTask'
+import UserTasks from './components/tasks/UserTasks'
+import Profile from './components/Profile'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,7 +34,8 @@ function App() {
           <Route path="edit-task/:ID" element={<CreateUpdateTask />} />
           <Route path="all-tasks" element={<AllTasks />}></Route>
           <Route path="my-tasks" element={<MyTask />}></Route>
-
+          <Route path="users" element={<UserTasks />}></Route>
+          <Route path="profile" element={<Profile />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

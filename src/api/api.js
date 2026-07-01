@@ -28,3 +28,8 @@ export const getAllUsers = async () => {
   const res = await axiosInstance.get("/user/getAllUser");
   return res.data;
 };
+
+export const changePassword = async (id,pass) => {
+  const res = await axiosInstance.patch(`/user/changePassword/${id}`, pass);
+    return res.data;
+};
