@@ -29,7 +29,8 @@ export const getAllUsers = async () => {
   return res.data;
 };
 
-export const changePassword = async (id,pass) => {
-  const res = await axiosInstance.patch(`/user/changePassword/${id}`, pass);
+export const changePasswordAPI = async (id,pass) => {
+  // console.log('////////////////')
+  const res = await axiosInstance.patch(`/user/changePassword/${id}`, {pass: pass});
     return res.data;
 };

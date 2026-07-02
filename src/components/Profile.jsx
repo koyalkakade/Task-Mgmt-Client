@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import defaultAvatar from "../assets/user-default.jpg";
-import { getUserInfo } from "../api/api";
+import { changePasswordAPI, getUserInfo } from "../api/api";
 import { toast } from "react-toastify";
 import ConfirmationModal from "./ConfirmationModel";
 
@@ -62,7 +62,7 @@ function Profile() {
         try {
             const id = user.id;
             const pass = password.newPassword;
-            const res = await changePassword(id, pass);
+            const res = await changePasswordAPI(id, pass);
             toast.success(res.msg);
             setPassword("")
         }

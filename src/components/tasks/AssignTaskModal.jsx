@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { assignTaskToUserAPI } from "../../api/assignTask";
-
 import { toast } from "react-toastify";
 
 const AssignTaskModal = ({

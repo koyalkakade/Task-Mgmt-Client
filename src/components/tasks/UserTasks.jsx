@@ -62,7 +62,7 @@ const UserTasks = () => {
         <div className="container-fluid mt-4">
             <div className="card shadow">
                 <div className="card-header bg-primary text-white">
-                    <h4 className="mb-0">My Tasks</h4>
+                    <h4 className="mb-0">Users Tasks</h4>
                 </div>
 
                 <div className="card-body">

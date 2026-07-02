@@ -4,6 +4,7 @@ import { getAllUsers } from '../../api/api'
 import { assignTaskToUserAPI } from "../../api/assignTask";
 import { toast } from "react-toastify";
 import AssignTaskModal from "./AssignTaskModal";
+import ConfirmationModal from "../ConfirmationModel";
 import {
     FaEdit,
     FaTrash,
@@ -30,6 +31,8 @@ const AllTasks = () => {
     const [showAssignModal, setShowAssignModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [selectedUser, setSelectedUser] = useState("");
+    const [showDelete, setShowDelete] = useState(false);
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
 
     const tasksPerPage = 10;
 
@@ -46,15 +49,15 @@ const AllTasks = () => {
     //     fetchTasks();
     // }, []);
 
-    const handleDelete = async (id) => {
-        try {
-            const res = await deleteTASK(id);
-            toast.success(res.msg || "Task deleted successfully");
-            fetchTasks();
-        } catch (error) {
-            toast.error(error.response?.data?.msg || "Delete failed");
-        }
-    };
+    // const handleDelete = async (id) => {
+    //     try {
+    //         const res = await deleteTASK(id);
+    //         toast.success(res.msg || "Task deleted successfully");
+    //         fetchTasks();
+    //     } catch (error) {
+    //         toast.error(error.response?.data?.msg || "Delete failed");
+    //     }
+    // };
 
     const filteredTasks = tasks.filter((task) => {
         const searchMatch =
@@ -129,7 +132,25 @@ const AllTasks = () => {
     };
 
 
+    const openDeleteModal = (id) => {
+        setSelectedTaskId(id);
+        setShowDelete(true);
+    };
 
+    const deleteTask = async () => {
+        try {
+            const result = await deleteTASK(selectedTaskId);
+            toast.success("Task deleted successfully");
+            //toast.success(result.msg || "Task deleted successfully");
+            fetchTasks();
+
+
+            setShowDelete(false);
+            setSelectedTaskId(null);
+        } catch (error) {
+            toast.error(error.response?.data?.msg || "Something went wrong");
+        }
+    };
 
     return (
         <div className="container-fluid mt-4">
@@ -260,7 +281,7 @@ const AllTasks = () => {
 
                                                 <button
                                                     className="btn btn-sm btn-danger me-2"
-                                                    onClick={() => handleDelete(task.id)}
+                                                    onClick={() => openDeleteModal(task.id)}
                                                 >
                                                     <FaTrash />
                                                 </button>
@@ -276,6 +297,17 @@ const AllTasks = () => {
                                                 handleClose={closeAssignModal}
                                                 task={selectedTask}
                                                 users={users}
+                                            />
+                                            <ConfirmationModal
+                                                show={showDelete}
+                                                title="Delete Task"
+                                                message="Are you sure you want to delete this task?"
+                                                confirmText="Delete"
+                                                onConfirm={deleteTask}
+                                                onCancel={() => {
+                                                    setShowDelete(false);
+                                                    setSelectedTaskId(null);
+                                                }}
                                             />
                                         </tr>
                                     ))
